@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Customer extends Model
+class Address extends Model
 {
     use HasUuids, HasFactory;
 
@@ -16,12 +16,12 @@ class Customer extends Model
      * @var array
      */
     protected $fillable = [
-        'title',
-        'name',
-        'gender',
-        'phone_number',
-        'avatar',
-        'email',
+        'customer_id',
+        'address',
+        'district',
+        'city',
+        'province',
+        'postal_code',
     ];
 
     /**
@@ -45,10 +45,10 @@ class Customer extends Model
     }
 
     /**
-     * Get the addresses for the customer.
+     * Get the customer that owns the address.
      */
-    public function address()
+    public function customer()
     {
-        return $this->hasMany(Address::class);
+        return $this->belongsTo(Customer::class);
     }
 }

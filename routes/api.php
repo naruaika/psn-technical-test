@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\AddressController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,4 +19,7 @@ use App\Http\Controllers\CustomerController;
 
 Route::prefix('v1')->group(function () {
     Route::apiResource('customer', CustomerController::class);
+    Route::apiResource('address', AddressController::class)->only([
+        'store', 'update', 'destroy'
+    ]);
 });

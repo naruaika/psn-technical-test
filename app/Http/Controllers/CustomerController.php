@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Validator;
 
 use App\Http\Requests\StoreCustomerRequest;
 use App\Http\Requests\UpdateCustomerRequest;
 use App\Http\Resources\CustomerResource;
+use App\Http\Resources\CustomerDetailResource;
 use App\Models\Customer;
 
 class CustomerController extends Controller
@@ -60,7 +59,7 @@ class CustomerController extends Controller
      */
     public function show(Customer $customer)
     {
-        return new CustomerResource($customer);
+        return new CustomerDetailResource($customer);
     }
 
     /**
@@ -92,7 +91,7 @@ class CustomerController extends Controller
             $input['avatar'] = $input['avatar']->storePublicly('public/avatars');
         }
 
-        // Update the customer's data
+        // Update the customer record
         $customer->update($input);
 
         // Refresh the customer model
@@ -114,9 +113,9 @@ class CustomerController extends Controller
             Storage::delete($customer->avatar);
         }
 
-        // Delete the customer's data
+        // Delete the customer record
         $customer->delete();
 
-        return new CustomerResource($customer);
+        return new CustomerDetailResource($customer);
     }
 }
