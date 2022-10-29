@@ -17,6 +17,18 @@ class StoreCustomerRequest extends ApiFormRequest
     }
 
     /**
+     * Prepare the data for validation.
+     *
+     * @return void
+     */
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'phone_number' => normalise_phone_number($this->phone_number),
+        ]);
+    }
+
+    /**
      * Get the validation rules that apply to the request.
      *
      * @return array<string, mixed>
@@ -41,7 +53,7 @@ class StoreCustomerRequest extends ApiFormRequest
                 'required',
                 'string',
                 'max:15',
-                'unique:customers'
+                'regex:/^([0-9\s\-\+\(\)]*)$/i',
             ],
             'avatar' => [
                 'nullable',
