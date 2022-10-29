@@ -27,6 +27,7 @@ class UpdateAddressRequest extends ApiFormRequest
             'address' => [
                 'sometimes',
                 'required',
+                'max:255',
             ],
             'district' => [
                 'sometimes',

@@ -30,6 +30,7 @@ class StoreAddressRequest extends ApiFormRequest
             ],
             'address' => [
                 'required',
+                'max:255',
             ],
             'district' => [
                 'required',
