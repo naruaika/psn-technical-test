@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Log;
 
 class UpdateCustomerRequest extends ApiFormRequest
 {
@@ -23,9 +24,11 @@ class UpdateCustomerRequest extends ApiFormRequest
      */
     protected function prepareForValidation()
     {
-        $this->merge([
-            'phone_number' => normalise_phone_number($this->phone_number),
-        ]);
+        if (isset($this->phone_number)) {
+            $this->merge([
+                'phone_number' => normalise_phone_number($this->phone_number),
+            ]);
+        }
     }
 
     /**
@@ -35,6 +38,11 @@ class UpdateCustomerRequest extends ApiFormRequest
      */
     public function rules()
     {
+        Log::warning('Trying to update a customer.', [
+            'customer' => $this->route('customer')->id,
+            'input' => $this->input(),
+        ]);
+
         return [
             'title' => [
                 'sometimes',

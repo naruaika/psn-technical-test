@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Log;
 
 class StoreCustomerRequest extends ApiFormRequest
 {
@@ -23,9 +24,11 @@ class StoreCustomerRequest extends ApiFormRequest
      */
     protected function prepareForValidation()
     {
-        $this->merge([
-            'phone_number' => normalise_phone_number($this->phone_number),
-        ]);
+        if (isset($this->phone_number)) {
+            $this->merge([
+                'phone_number' => normalise_phone_number($this->phone_number),
+            ]);
+        }
     }
 
     /**
@@ -35,6 +38,10 @@ class StoreCustomerRequest extends ApiFormRequest
      */
     public function rules()
     {
+        Log::warning('Trying to create a new customer.', [
+            'input' => $this->input()
+        ]);
+
         return [
             'title' => [
                 'nullable',

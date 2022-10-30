@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Log;
+
 use App\Http\Requests\StoreAddressRequest;
 use App\Http\Requests\UpdateAddressRequest;
 use App\Http\Resources\AddressResource;
@@ -42,6 +44,11 @@ class AddressController extends Controller
         // Insert the newly address record
         $address = Address::create($input);
 
+        //
+        Log::info('Inserted a new address.', [
+            'address' => $address->id,
+        ]);
+
         return new AddressResource($address);
     }
 
@@ -69,6 +76,11 @@ class AddressController extends Controller
         // Refresh the address model
         $address->refresh();
 
+        //
+        Log::info('Updated an address.', [
+            'address' => $address->id
+        ]);
+
         return new AddressResource($address);
     }
 
@@ -80,8 +92,17 @@ class AddressController extends Controller
      */
     public function destroy(Address $address)
     {
+        Log::warning('Trying to delete an address.', [
+            'address' => $address->id
+        ]);
+
         // Delete the address record
         $address->delete();
+
+        //
+        Log::info('Deleted an address.', [
+            'address' => $address->id
+        ]);
 
         return new AddressResource($address);
     }

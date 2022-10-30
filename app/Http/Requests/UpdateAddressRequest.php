@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Log;
 
 class UpdateAddressRequest extends ApiFormRequest
 {
@@ -23,6 +24,11 @@ class UpdateAddressRequest extends ApiFormRequest
      */
     public function rules()
     {
+        Log::warning('Trying to update a address.', [
+            'address' => $this->route('address')->id,
+            'input' => $this->input(),
+        ]);
+
         return [
             'address' => [
                 'sometimes',

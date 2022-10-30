@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Log;
 
 class StoreAddressRequest extends ApiFormRequest
 {
@@ -23,6 +24,10 @@ class StoreAddressRequest extends ApiFormRequest
      */
     public function rules()
     {
+        Log::warning('Trying to create a new address.', [
+            'input' => $this->input()
+        ]);
+
         return [
             'customer_uuid' => [
                 'required',

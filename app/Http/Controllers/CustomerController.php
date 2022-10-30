@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 use App\Http\Requests\StoreCustomerRequest;
@@ -19,6 +20,8 @@ class CustomerController extends Controller
      */
     public function index()
     {
+        Log::warning('Showing a list of all customers.');
+
         return CustomerResource::collection(Customer::all());
     }
 
@@ -43,10 +46,20 @@ class CustomerController extends Controller
         if (isset($input['avatar'])) {
             // Store the customer's avatar
             $input['avatar'] = $input['avatar']->storePublicly('public/avatars');
+
+            //
+            Log::info('Stored a new customer\'s avatar.', [
+                'avatar' => $input['avatar']
+            ]);
         }
 
         // Insert the newly customer record
         $customer = Customer::create($input);
+
+        //
+        Log::info('Inserted a new customer.', [
+            'customer' => $customer->id
+        ]);
 
         return new CustomerResource($customer);
     }
@@ -59,6 +72,10 @@ class CustomerController extends Controller
      */
     public function show(Customer $customer)
     {
+        Log::warning('Showing the customer detail.', [
+            'customer' => $customer->id
+        ]);
+
         return new CustomerDetailResource($customer);
     }
 
@@ -89,6 +106,12 @@ class CustomerController extends Controller
 
             // Store the newly customer's avatar
             $input['avatar'] = $input['avatar']->storePublicly('public/avatars');
+
+            //
+            Log::info('Replaced a new customer\'s avatar.', [
+                'customer' => $customer->id,
+                'avatar' => $input['avatar'],
+            ]);
         }
 
         // Update the customer record
@@ -96,6 +119,11 @@ class CustomerController extends Controller
 
         // Refresh the customer model
         $customer->refresh();
+
+        //
+        Log::info('Updated a customer.', [
+            'customer' => $customer->id
+        ]);
 
         return new CustomerResource($customer);
     }
@@ -108,13 +136,27 @@ class CustomerController extends Controller
      */
     public function destroy(Customer $customer)
     {
+        Log::warning('Trying to delete a customer.', [
+            'customer' => $customer->id
+        ]);
+
         if (! empty($customer->avatar)) {
             // Delete the customer's avatar
             Storage::delete($customer->avatar);
+
+            //
+            Log::info('Deleted a customer\'s avatar.', [
+                'customer' => $customer->id
+            ]);
         }
 
         // Delete the customer record
         $customer->delete();
+
+        //
+        Log::info('Deleted a customer.', [
+            'customer' => $customer->id
+        ]);
 
         return new CustomerDetailResource($customer);
     }
