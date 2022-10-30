@@ -51,6 +51,7 @@ class StoreAddressRequest extends ApiFormRequest
             ],
             'postal_code' => [
                 'required',
+                'regex:/^([0-9]*)$/i',
                 'max:15',
             ],
         ];

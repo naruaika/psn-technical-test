@@ -16,8 +16,16 @@ class AddressFactory extends Factory
      */
     public function definition()
     {
+        $customer = CustomerFactory::new()->create();
+
         return [
-            //
+            'uuid' => fake()->unique()->uuid(),
+            'customer_id' => $customer->id,
+            'address' => fake()->address(),
+            'district' => fake()->state(),
+            'city' => fake()->city(),
+            'province' => fake()->country(),
+            'postal_code' => fake()->postcode(),
         ];
     }
 }

@@ -53,6 +53,7 @@ class UpdateAddressRequest extends ApiFormRequest
             'postal_code' => [
                 'sometimes',
                 'required',
+                'regex:/^([0-9]*)$/i',
                 'max:15',
             ],
         ];
