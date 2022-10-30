@@ -18,15 +18,15 @@ if (! function_exists('asset_storage')) {
     }
 }
 
-if (! function_exists('normalise_phone_number')) {
+if (! function_exists('strip_spaces')) {
     /**
-     * Get the path to the storage folder.
+     * Strip any whitespace.
      *
-     * @param  string  $path
+     * @param  string  $str
      * @return string
      */
-    function normalise_phone_number($phone_number = '')
+    function strip_spaces($str = '')
     {
-        return preg_replace("/[^0-9\+]/", '', $phone_number);
+        return str_replace(' ', '', $str);
     }
 }

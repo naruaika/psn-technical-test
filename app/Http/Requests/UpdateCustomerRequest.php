@@ -26,7 +26,7 @@ class UpdateCustomerRequest extends ApiFormRequest
     {
         if (isset($this->phone_number)) {
             $this->merge([
-                'phone_number' => normalise_phone_number($this->phone_number),
+                'phone_number' => strip_spaces($this->phone_number),
             ]);
         }
     }

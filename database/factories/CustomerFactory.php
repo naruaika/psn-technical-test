@@ -22,7 +22,7 @@ class CustomerFactory extends Factory
             'title' => fake()->title(),
             'gender' => fake()->randomElement(['M', 'F']),
             'phone_number' => fake()->unique()->e164PhoneNumber(),
-            'avatar' => '', //fake()->image('public/storage', 512, 512, null, false),
+            'avatar' => '',
             'email' => fake()->unique()->email(),
         ];
     }
