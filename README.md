@@ -13,15 +13,22 @@ A simple customer RESTFul API service.
 To run the application, execute below commands in terminal:
 
 ```sh
+# Clone this repository
 git clone git@github.com:naruaika/psn-technical-test.git
+
 cd psn-technical-test
-docker-compose up -d
+
+# Setup the project
+cp .env.example .env
+docker run --rm --interactive --tty --volume $PWD:/app --user $(id -u):$(id -g) composer install
+
+# Run the project
+vendor/bin/sail up
 ```
 
 Open the terminal of the Laravel application container and execute above commands to setup the application:
 
 ```sh
-composer install
 php artisan key:generate
 php artisan migrate
 ```
