@@ -1,4 +1,4 @@
-# Technical Test - Backed Engineer
+# Technical Test - Backend Engineer
 
 A simple customer RESTFul API service.
 
